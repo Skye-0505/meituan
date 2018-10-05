@@ -53,10 +53,18 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       poll: config.dev.poll,
     },
     before(app){
-      app.get("/api/goods",(req,res)=>{
+      app.get("/api/goods",(req,res) => {
         res.json(goods)
       })
-      
+
+      app.get("/api/ratings",(req,res) => {
+        res.json(ratings)
+      })
+
+      app.get("/api/seller",(req,res) => {
+        res.json(seller)
+      })
+
     }
   },
   plugins: [
