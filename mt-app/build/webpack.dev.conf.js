@@ -55,15 +55,15 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     before(app){
       app.get("/api/goods",(req,res) => {
         res.json(goods)
-      })
+      });
 
       app.get("/api/ratings",(req,res) => {
         res.json(ratings)
-      })
+      });
 
       app.get("/api/seller",(req,res) => {
         res.json(seller)
-      })
+      });
 
     }
   },
