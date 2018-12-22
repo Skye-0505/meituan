@@ -98,11 +98,17 @@
 </template>
 
 <script>
+
+import Star from'../star/Star.vue';
+
 export default {
 	data(){
 		return {
 			isShow:false
 		}
+	},
+	components:{
+		"app-star":Star
 	},
 	props:{
 		poiInfo:{
