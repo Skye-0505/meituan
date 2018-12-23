@@ -19,7 +19,7 @@
 五、background-position属性两个参数分别表示水平方向和竖直方向，参数为负数时表示向右或向下移动。
 
 六、应用组件的vue给被应用的组件vue传值：
-1. 在应用组件的vue中的组件标签里绑定属性和值，该属性和值会被传递到组件中。例如 <app-star :score="poiInfo.wm_poi_score"></app-star>
+1. 在应用组件的vue中的组件标签里绑定属性和值，该属性和值会被传递到组件中。例如 （app-star :score="poiInfo.wm_poi_score"）（/app-star）
 2. 在被应用的组件vue中的props里接收此属性，例如   
    props:{
       score:{
