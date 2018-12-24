@@ -24,6 +24,9 @@
 	            <img class="icon" :src="item.icon" v-if="item.icon">
 	            {{item.name}}
 	          </p>
+	          <i class="num" v-show="calculateCount(item.spus)">
+	            {{calculateCount(item.spus)}}
+	          </i>
 	        </li>
 	    </ul>
     </div>
@@ -46,17 +49,20 @@
             <li v-for="(food,index) in item.spus" :key="index" class="food-item">
               <div class="icon" :style="head_bg(food.picture)"></div>
               <div class="content">
-                <h3 class="name">{{food.name}}</h3>
-                <p class="desc" v-if="food.description">{{food.description}}</p>
-                <div class="extra">
-                  <span class="saled">{{food.month_saled_content}}</span>
-                  <span class="praise">{{food.praise_content}}</span>
-                </div>
-                <img class="product" :src="food.product_label_picture" alt="">
-                <p class="price">
-                  <span class="text">${{food.min_price}}</span>
-                  <span class="unit">/{{food.unit}}</span>
-                </p>
+	                <h3 class="name">{{food.name}}</h3>
+	                <p class="desc" v-if="food.description">{{food.description}}</p>
+	                <div class="extra">
+	                  <span class="saled">{{food.month_saled_content}}</span>
+	                  <span class="praise">{{food.praise_content}}</span>
+	                </div>
+	                <img class="product" :src="food.product_label_picture" alt="">
+	                <p class="price">
+	                  <span class="text">${{food.min_price}}</span>
+	                  <span class="unit">/{{food.unit}}</span>
+	                </p>
+              </div>
+              <div class="cartcontrol-wrapper">
+                <app-cart-control :food="food"></app-cart-control>
               </div>
             </li>
           </ul>
@@ -65,18 +71,21 @@
     </div> 
 
     <!-- 购物车 -->
-    <app-shopcart></app-shopcart>   
+    <app-shopcart :poiInfo="poiInfo" :selectFoods="selectFoods"></app-shopcart>   
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
 import Shopcart from '../shopcart/Shopcart'
+import CartControl from '../cartcontrol/CartControl'
+
 export default {
 	data(){
 		return{
 			container:{},
       		goods:[],
+      		poiInfo:{},
       		listHeight:[],
 	        menuScroll:{},
 	        foodScroll:{},
@@ -84,7 +93,8 @@ export default {
 		}
 	},
 	components:{
-		"app-shopcart":Shopcart
+		"app-shopcart":Shopcart,
+		"app-cart-control":CartControl
 	},
 	methods:{
 	    head_bg(imgName){
@@ -121,7 +131,16 @@ export default {
 		      // console.log(element)
 		      // 滚动到对应元素的位置
 		    this.foodScroll.scrollToElement(element,250)
-		}
+		},
+		calculateCount(spus){
+	      let count = 0
+	      spus.forEach((food) => {
+	        if(food.count > 0){
+	          count += food.count
+	        }
+	      })
+	      return count
+	    }
 	},
 	computed:{
 	    currentIndex(){
@@ -137,6 +156,18 @@ export default {
 	        }
 	      }
 	      return 0
+	    },
+	    selectFoods(){
+	      let foods = []
+	      this.goods.forEach((myfoods) => {
+	        myfoods.spus.forEach((food) => {
+	          if(food.count > 0){
+	            foods.push(food)
+	          }
+	        })
+	      })
+
+	      return foods
 	    }
 	},
 	created(){
@@ -148,6 +179,7 @@ export default {
 	  		if(response.code == 0){
 	  			this.container = response.data.container_operation_source
 	  			this.goods = response.data.food_spu_tags
+	  			this.poiInfo = response.data.poi_info
 
 	  			// DOM更新完成时执行
 		        this.$nextTick(() => {
