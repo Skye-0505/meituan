@@ -62,12 +62,16 @@
           </ul>
         </li>
       </ul>
-    </div>    
+    </div> 
+
+    <!-- 购物车 -->
+    <app-shopcart></app-shopcart>   
   </div>
 </template>
 
 <script>
 import BScroll from 'better-scroll'
+import Shopcart from '../shopcart/Shopcart'
 export default {
 	data(){
 		return{
@@ -78,6 +82,9 @@ export default {
 	        foodScroll:{},
 	        scrollY:0
 		}
+	},
+	components:{
+		"app-shopcart":Shopcart
 	},
 	methods:{
 	    head_bg(imgName){
