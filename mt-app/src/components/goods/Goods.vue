@@ -4,14 +4,22 @@
     <div class="menu-wrapper" ref="menuScroll">
 	    <ul>
 	        <!-- 专场 -->
-	        <li class="menu-item" :class="{'current':currentIndex === 0}" >
+	        <li 
+	          class="menu-item" 
+	          :class="{'current':currentIndex === 0}"
+	          @click="selectMenu(0)">
 	          <p class="text">
 	            <img class="icon" :src="container.tag_icon" v-if="container.tag_icon">
 	            {{container.tag_name}}
 	          </p>
 	        </li>
 
-	        <li class="menu-item" :class="{'current':currentIndex === index+1}" v-for="(item,index) in goods" :key="index">
+	        <li 
+	            class="menu-item" 
+	            :class="{'current':currentIndex === index + 1}" 
+	            v-for="(item,index) in goods" :key="index"
+	            @click="selectMenu(index+1)"
+            >
 	          <p class="text">
 	            <img class="icon" :src="item.icon" v-if="item.icon">
 	            {{item.name}}
@@ -78,7 +86,8 @@ export default {
 	    initScroll(){
 	      this.menuScroll = new BScroll(this.$refs.menuScroll)
 	      this.foodScroll = new BScroll(this.$refs.foodScroll,{
-		    probeType:3
+		    probeType:3,
+		    click:true
 		  })
 
 		  // foodScroll 监听事件
@@ -98,7 +107,14 @@ export default {
 	        height += foodlist[i].clientHeight
 	        this.listHeight.push(height)
 	      }
-	    }
+	    },
+	    selectMenu(index){
+			let foodlist = this.$refs.foodScroll.getElementsByClassName("food-list-hook")
+		    let element = foodlist[index]
+		      // console.log(element)
+		      // 滚动到对应元素的位置
+		    this.foodScroll.scrollToElement(element,250)
+		}
 	},
 	computed:{
 	    currentIndex(){
