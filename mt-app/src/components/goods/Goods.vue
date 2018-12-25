@@ -46,7 +46,8 @@
 
           <!-- 具体的商品列表 -->
           <ul>
-            <li v-for="(food,index) in item.spus" :key="index" class="food-item">
+            <li v-for="(food,index) in item.spus" :key="index" class="food-item" 
+            @click="showDetail(food)">
               <div class="icon" :style="head_bg(food.picture)"></div>
               <div class="content">
 	                <h3 class="name">{{food.name}}</h3>
@@ -71,7 +72,10 @@
     </div> 
 
     <!-- 购物车 -->
-    <app-shopcart :poiInfo="poiInfo" :selectFoods="selectFoods"></app-shopcart>   
+    <app-shopcart :poiInfo="poiInfo" :selectFoods="selectFoods"></app-shopcart>
+
+    <!-- 商品详情 -->
+    <app-product-detail :food="selectFood"></app-product-detail>   
   </div>
 </template>
 
@@ -79,6 +83,7 @@
 import BScroll from 'better-scroll'
 import Shopcart from '../shopcart/Shopcart'
 import CartControl from '../cartcontrol/CartControl'
+import ProductDetail from '../productDetail/ProductDetail'
 
 export default {
 	data(){
@@ -89,12 +94,14 @@ export default {
       		listHeight:[],
 	        menuScroll:{},
 	        foodScroll:{},
-	        scrollY:0
+	        scrollY:0,
+	        selectFood:{}
 		}
 	},
 	components:{
 		"app-shopcart":Shopcart,
-		"app-cart-control":CartControl
+		"app-cart-control":CartControl,
+		"app-product-detail":ProductDetail
 	},
 	methods:{
 	    head_bg(imgName){
@@ -140,6 +147,9 @@ export default {
 	        }
 	      })
 	      return count
+	    },
+	    showDetail(food){
+	    	this.selectFood = food
 	    }
 	},
 	computed:{

@@ -25,7 +25,7 @@
 			</div>
 			<div class="list-header">
 				<h3 class="title">1号口袋</h3>
-				<div class="empty">
+				<div class="empty" @click="clearAll">
 					<img src="./img/ash_bin.png" />
 					<span>清空购物车</span>
 				</div>
@@ -53,6 +53,7 @@
 			<div class="list-bottom"></div>
 		</div> 
     </div>
+    <div class="shopcart-mask" v-show="listShow" @click="hideMask"></div>
   </div>
 </template>
 
@@ -134,6 +135,14 @@ export default {
 			}
 
 			this.fold = !this.fold
+		},
+		clearAll(){
+			this.selectFoods.forEach((food) => {
+				food.count = 0
+			})
+		},
+		hideMask(){
+			this.fold = true
 		}
 	}
 
