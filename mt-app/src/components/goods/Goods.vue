@@ -75,7 +75,7 @@
     <app-shopcart :poiInfo="poiInfo" :selectFoods="selectFoods"></app-shopcart>
 
     <!-- 商品详情 -->
-    <app-product-detail :food="selectFood"></app-product-detail>   
+    <app-product-detail :food="selectFood" ref="foodView"></app-product-detail>   
   </div>
 </template>
 
@@ -150,6 +150,7 @@ export default {
 	    },
 	    showDetail(food){
 	    	this.selectFood = food
+	    	this.$refs.foodView.showView()
 	    }
 	},
 	computed:{
