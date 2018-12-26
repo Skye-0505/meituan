@@ -26,7 +26,50 @@
                 选规格
               </div>
            </div>
+        </div>
+        <Split></Split>
 
+		<!-- 外卖评价 -->
+        <div class="rating-wrapper">
+          <!-- 评价头部 -->
+          <div class="rating-title">
+            <div class="like-ratio" v-if="food.rating">
+              <span class="title">{{food.rating.title}}</span>
+              <span class="retio">
+                (
+                  {{food.rating.like_ratio_desc}}
+                  <i>{{food.rating.like_ratio}}</i>
+                )
+              </span>
+            </div>
+            <div class="snd-title" v-if="food.rating">
+                  <span class="text">{{food.rating.snd_title}}</span> 
+                  <span class="icon icon-keyboard_arrow_right"></span> 
+            </div>
+          </div>
+          <ul class="rating-content" v-if="food.rating">
+            <li 
+              v-for="(comment,index) in food.rating.comment_list" 
+              :key="index"
+              class="comment-item"
+              >
+              <div class="comment-header">
+                <img :src="comment.user_icon" v-if="comment.user_icon" />
+                <img src="./img/anonymity.png" v-if="!comment.user_icon"  />
+              </div>
+              <div class="comment-main">
+                <div class="user">
+                  {{comment.user_name}}
+                </div>
+                <div class="time">
+                  {{comment.comment_time}}
+                </div>
+                <div class="content">
+                  {{comment.comment_content}}
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
@@ -34,6 +77,8 @@
 </template>
 
 <script>
+import BScroll from 'better-scroll'
+import Split from '../split/Split'
 import CartControl from '../cartcontrol/CartControl'
 import Vue from 'vue'
 export default {
@@ -50,6 +95,16 @@ export default {
 	methods:{
 		showView(){
 	        this.showFlag = true
+
+	        this.$nextTick(() => {
+	          if(!this.scroll){
+	            this.scroll = new BScroll(this.$refs.foodView,{
+	              click:true
+	            })
+	          }else{
+	            this.scroll.refresh()
+	          }
+            })
 	    },
 	    closeView(){
 	        this.showFlag = false
@@ -59,7 +114,8 @@ export default {
 	    }
 	},
 	components:{
-      CartControl
+      CartControl,
+      Split
     }
 }
 </script>
