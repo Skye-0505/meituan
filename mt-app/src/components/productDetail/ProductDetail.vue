@@ -5,7 +5,7 @@
         <div class="food-content">
           <div class="img-wrapper">
             <img class="food-img" :src="food.picture"/>
-            <span class="close-bt icon-close"></span>
+            <span class="close-bt icon-close" @click="closeView"></span>
             <img class="share-bt" src="./img/share.png" />
             <img class="more-bt" src="./img/more.png" />
           </div>
@@ -18,7 +18,15 @@
                 <span class="text">￥{{food.min_price}}</span>
                 <span class="unit">/{{food.unit}}</span>
               </p>
+
+              <div class="cartcontrol-wrapper">
+                <CartControl :food="food"></CartControl>
+              </div>
+              <div class="buy" @click="addProduct" v-show="!food.count || food.count == 0">
+                选规格
+              </div>
            </div>
+
         </div>
       </div>
     </div>
@@ -26,6 +34,8 @@
 </template>
 
 <script>
+import CartControl from '../cartcontrol/CartControl'
+import Vue from 'vue'
 export default {
 	data(){
       return {
@@ -39,10 +49,18 @@ export default {
 	},
 	methods:{
 		showView(){
-			console.log("点击触发")
 	        this.showFlag = true
+	    },
+	    closeView(){
+	        this.showFlag = false
+	    },
+	    addProduct(){
+	    	Vue.set(this.food,"count",1)
 	    }
-	}
+	},
+	components:{
+      CartControl
+    }
 }
 </script>
 
