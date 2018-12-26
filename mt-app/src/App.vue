@@ -3,7 +3,7 @@
 	<!-- header -->
 	<app-header :poiInfo="poiInfo"></app-header>
 	<!-- nav -->
-	<app-nav></app-nav>
+	<app-nav :commentNum="commentNum"></app-nav>
 	<!-- cotent -->
 	<router-view></router-view>
   </div>
@@ -18,7 +18,8 @@ export default {
   name: 'App',
   data(){
   	return{
-  		poiInfo:{}
+  		poiInfo:{},
+      commentNum:0
   	}
   },
   components:{
@@ -35,6 +36,16 @@ export default {
   			this.poiInfo = response.data.poi_info
   		}
   	});
+
+    fetch("/api/ratings")
+      .then(res => {
+        return res.json()
+      })
+      .then(response =>{
+        if(response.code == 0){
+          this.commentNum = response.data.comment_num
+        }
+    })
   }
 }
 </script>
