@@ -26,6 +26,22 @@
         type:Number
       }
     }
+    
+七、vue拿数据不能超过两级目录，若超过两级需要用v-if判断是否有这个数据
+
+八、真机演示：
+1. 保证手机和开发机在同一局域网下
+2. 更改index.js中的host为'0.0.0.0'
+3. 重启npm run dev
+4. 手机访问开发机本机IP加端口号即可
+
+九、真机调试：
+1. npm install -g weinre
+2. weinre --boundHost 本机IP地址
+3. 在target script下将<script>引入index.js的<head>中
+4. 点击进入debug
+5. 用手机刷新页面即可
+
 ## 问题
 一、CSS中设置backgroud-size和background-position无效，这部分对应html和css如下：
 ![](https://github.com/Skye-0505/meituan/blob/master/issueimg/issue1.jpg)
