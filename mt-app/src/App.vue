@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-	<!-- header -->
-	<app-header :poiInfo="poiInfo"></app-header>
-	<!-- nav -->
-	<app-nav :commentNum="commentNum"></app-nav>
-	<!-- cotent -->
-	<router-view></router-view>
+  	<!-- header -->
+  	<app-header :poiInfo="poiInfo"></app-header>
+  	<!-- nav -->
+  	<app-nav :commentNum="commentNum"></app-nav>
+  	<!-- cotent -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
